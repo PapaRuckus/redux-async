@@ -3,21 +3,13 @@ import GifList from "./components/GifList";
 import GifForm from "./components/GifForm";
 import { connect } from "react-redux";
 import { useEffect } from "react";
-import { fetchstart, fetchSuccess } from "./actions";
-import axios from "axios";
+import { getGifs } from "./actions";
 
 function App(props) {
-  const { loading, error } = props;
+  const { loading, error, getGifs } = props;
 
   useEffect(() => {
-    props.fetchstart();
-    axios
-      .get(
-        `https://api.giphy.com/v1/gifs/search?api_key=zbJLj05GcKTx4iYyJSVZUUe8p50Mn2WB&q=dogs`
-      )
-      .then((res) => {
-        props.fetchSuccess(res.data.data);
-      });
+    getGifs("dogs");
   }, []);
 
   return (
@@ -45,4 +37,4 @@ const mapStateToProps = (state) => {
 //   }
 // }
 
-export default connect(mapStateToProps, { fetchstart, fetchSuccess })(App);
+export default connect(mapStateToProps, { getGifs })(App);
